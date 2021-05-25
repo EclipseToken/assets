@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout (trustwallet repo, secret token)
-        if: github.repository_owner == 'trustwallet'
+        if: github.repository_owner == ''
         uses: actions/checkout@v2
         with:
           token: ${{ secrets.COMMIT_TOKEN }}
@@ -22,7 +22,7 @@ jobs:
           # this is needed for history, needs to access prev commits
           fetch-depth: 0
       - name: Checkout (fork repo, default token)
-        if: github.repository_owner != 'trustwallet'
+        if: github.repository_owner != blackhole''
         uses: actions/checkout@v2
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
@@ -33,7 +33,7 @@ jobs:
       - name: Install Dependencies
         run: npm ci
       - name: Run fix script (trustwallet repo, sanity and consistency)
-        if: github.repository_owner == 'trustwallet'
+        if: github.repository_owner == blackhole
         run: npm run fix
       - name: Run fix-sanity script (fork repo, sanity only)
         if: github.repository_owner != 'trustwallet'
